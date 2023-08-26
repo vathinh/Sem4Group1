@@ -1,0 +1,57 @@
+.login-pf-page .kc-logo-text {
+    background: url('../img/logo.svg') no-repeat center center;
+}
+
+#kc-page-title {
+    color: #ea2f24;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.card-pf {
+    border-top: 4px solid #ea2f24;
+}
+
+#kc-form-buttons #kc-login {
+    background-color: #ea2f24;
+    font-weight: bold;
+}
+
+#kc-form-buttons #kc-login:hover {
+    background-color: #b6251d;
+}
+
+#social-google:hover::after {
+    border-bottom-color: #ea2f24;
+}
+
+#social-google .kc-social-provider-name {
+    font-weight: bold;
+}
+
+#social-google:hover .kc-social-provider-name, #social-google:hover .kc-social-provider-logo {
+    color: #ea2f24;
+}
+
+#kc-form input:hover {
+    border-bottom-color: #ea2f24;
+}
+
+.login-pf body {
+    background: url("../img/bg.png") no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+}
+
+#kc-form-buttons input {
+    background-color: #ea2f24;
+    font-weight: bold;
+}
+
+#kc-form-buttons input:hover {
+    background-color: #b6251d;
+}
+
+#kc-passwd-update-form input:hover, #kc-update-profile-form input:hover {
+    border-bottom-color: #ea2f24;
+}
