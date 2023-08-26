@@ -18,6 +18,8 @@
     <modules>
         <module>api-gateway</module>
         <module>discovery-server</module>
+        <module>user-service</module>
+        <module>common-service</module>
     </modules>
 
     <properties>
