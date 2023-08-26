@@ -47,7 +47,7 @@ services:
       - "8080:8080"
     volumes:
       - ./keycloak/realms/import:/opt/keycloak/data/import
-      - ./keycloak/themes:/opt/keycloak/themes
+#      - ./keycloak/themes:/opt/keycloak/themes
     depends_on:
       - keycloak-mysql
 
