@@ -33,10 +33,6 @@ build/
 .vscode/
 
 ### My SQL Host Data ###
-my-sql-data
-mongo-data
-/mysql_keycloak_data/
-/postgres/
-/postgres-user/
+/sem4Infras/mysql_keycloak_data/
+/sem4Infras/postgres-user/
 /postgres-order/
-/grafana/
