@@ -7,8 +7,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.5</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>2.6.7</version>
+        <relativePath/>
     </parent>
 
     <groupId>com.aptech.group</groupId>
@@ -26,6 +26,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <spring-cloud.version>2022.0.1</spring-cloud.version>
+        <spring-boot.version>3.0.5</spring-boot.version>
         <testcontainers.version>1.17.6</testcontainers.version>
     </properties>
 
@@ -96,5 +97,37 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>build-common-service</id>
+            <modules>
+                <module>common-service</module>
+            </modules>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
+                    </plugin>
+                    <!-- Other common plugins here -->
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>build-other-services</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>api-gateway</module>
+                <module>discovery-server</module>
+                <module>user-service</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>

@@ -52,11 +52,11 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity builder) throws Exception {
         builder.ignoring()
-                .requestMatchers("/swagger-ui/**")
-                .requestMatchers("/v3/api-docs/**")
-                .requestMatchers(HttpMethod.OPTIONS, "/**")
-                .requestMatchers("/*.{js,html,css,png}")
-                .requestMatchers("/css/**", "/js/**", "/images/**");
+                .antMatchers("/swagger-ui/**")
+                .antMatchers("/v3/api-docs/**")
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .antMatchers("/*.{js,html,css,png}")
+                .antMatchers("/css/**", "/js/**", "/images/**");
     }
 
     @Bean
