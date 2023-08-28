@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@OpenAPIDefinition(info = @Info(title = "Sem 4 API", version = "1.0"),
+@OpenAPIDefinition(info = @Info(title = "User Service API", version = "1.0"),
     security = @SecurityRequirement(name = "Authorization"))
 @SecurityScheme(
     name = "Authorization",
