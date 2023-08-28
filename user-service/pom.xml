@@ -48,10 +48,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.mysql</groupId>-->
+<!--            <artifactId>mysql-connector-j</artifactId>-->
+<!--            <scope>runtime</scope>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <scope>runtime</scope>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -113,7 +117,6 @@
                 <version>4.15.0</version>
                 <configuration>
                     <outputChangeLogFile>src/main/resources/db/changelog/db.changelog.postgres.sql</outputChangeLogFile>
-                    <changeLogFile>src/main/resources/db/changelog/db.changelog-master.xml</changeLogFile>
                     <url> jdbc:postgresql://localhost:5431/user-service</url>
                     <username>admin</username>
                     <password>admin</password>
