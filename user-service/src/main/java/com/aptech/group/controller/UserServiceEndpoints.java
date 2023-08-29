@@ -8,4 +8,9 @@ import lombok.NoArgsConstructor;
 public class UserServiceEndpoints {
     public static final String USER_SERVICE_PATH = "/api/user";
 
+    public static final String TITLE_PATH = "/api/title";
+
+    public static final String ACCOUNT_PATH = "/api/account";
+
+
 }

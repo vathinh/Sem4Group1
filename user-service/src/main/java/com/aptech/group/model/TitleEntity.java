@@ -28,8 +28,8 @@ public class TitleEntity {
 
     private String code;
 
-//    @OneToMany(mappedBy="title")
-//    private Set<UserEntity> employees;
+    @OneToMany(mappedBy="title")
+    private Set<UserEntity> employees;
 
     @ManyToOne
     @JoinColumnOrFormula(column = @JoinColumn(name = "created_by", referencedColumnName = "keycloak_id", insertable = false, updatable = false))

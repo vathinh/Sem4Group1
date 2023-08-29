@@ -22,6 +22,8 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TitleEntity title;
 
     private String firstName;
     private String lastName;

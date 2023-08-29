@@ -4,6 +4,7 @@ import com.aptech.group.model.UserEntity;
 import com.aptech.group.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.keycloak.admin.client.Keycloak;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -23,12 +24,14 @@ public class EntityMapper {
     @Autowired
     UserRepository userRepository;
 
-    public UserEntity mappingUser(Long userId) {
+    public UserEntity mappingUser(Integer userId) {
         if (userId == null) {
             return null;
         }
         Optional<UserEntity> userEntityMono = userRepository.findById(userId);
         return userEntityMono.orElse(null);
     }
+
+
 
 }
