@@ -13,6 +13,7 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring", uses = EntityMapper.class)
 
 public interface UserMapper {
+
     UserResponse toResponse(UserEntity userEntity);
     UserResponse toResponse(UserReferResponse referResponse);
     UserReferResponse toReferResponse(UserEntity userEntity);

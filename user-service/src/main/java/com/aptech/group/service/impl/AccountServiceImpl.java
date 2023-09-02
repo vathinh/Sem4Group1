@@ -1,9 +1,9 @@
 package com.aptech.group.service.impl;
 
 import com.aptech.group.dto.account.AccountRequest;
-import com.aptech.group.dto.user.UserResponse;
+import com.aptech.group.dto.account.AccountResponse;
+import com.aptech.group.dto.user.UserRequest;
 import com.aptech.group.service.AccountService;
-import com.aptech.group.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
@@ -17,6 +17,10 @@ import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,9 +53,7 @@ public class AccountServiceImpl implements AccountService {
     @Value("${keycloak.resource}")
     private String keycloakResource;
 
-    private final UserService userService;
-
-    private final MessageServiceImpl messageService;
+//    private final UserService userService;
 
 
     private Keycloak getKeycloakClient() {
@@ -67,26 +69,53 @@ public class AccountServiceImpl implements AccountService {
                 ).build();
     }
 
+
     @Override
-    public void createKeycloakUser(AccountRequest accountRequest) throws NotFoundException {
-        UserResponse userResponse = userService.getById(accountRequest.getUserId());
-        if (userResponse == null) {
-           throw new NotFoundException(new NotFoundException("Can not find user"));
+    @Transactional
+    public void updatePassword(AccountRequest accountRequest) throws NotFoundException {
+
+    }
+
+    @Override
+    public Page<AccountResponse> getAllAccounts(String search, Integer first, Integer max, boolean briefRepresentation) {
+        Keycloak keycloakClient = getKeycloakClient();
+        RealmResource realmResource = keycloakClient.realm(keycloakReal);
+        UsersResource usersResource = realmResource.users();
+        List<UserRepresentation> userRepresentationList = usersResource.search(search, first, max,briefRepresentation );
+        Integer size = usersResource.count(search);
+
+        List<AccountResponse> accountResponses = userRepresentationList.stream()
+                .map(userRepresentation -> AccountResponse.builder()
+                        .id(userRepresentation.getId())
+                        .firstName(userRepresentation.getFirstName())
+                        .lastName(userRepresentation.getLastName())
+                        .email(userRepresentation.getEmail())
+                        .build())
+                .toList();
+
+        Pageable pageable = PageRequest.of(first, max);
+
+        return new PageImpl<>(accountResponses, pageable, size);
+    }
+
+    @Override
+    public String createKeycloak(UserRequest userRequest) throws NotFoundException {
+        if (userRequest == null) {
+            throw new NotFoundException(new NotFoundException("Can not create user"));
         }
 
         Keycloak keycloak = getKeycloakClient();
 
         UserRepresentation user = new UserRepresentation();
         user.setEnabled(true);
-        user.setUsername(userResponse.getEmail());
-        user.setFirstName(userResponse.getFirstName());
-        user.setLastName(userResponse.getLastName());
-        user.setEmail(userResponse.getEmail());
+        user.setUsername(userRequest.getEmail());
+        user.setFirstName(userRequest.getFirstName());
+        user.setLastName(userRequest.getLastName());
+        user.setEmail(userRequest.getEmail());
 
         Map<String, List<String>> attributes =new HashMap<>();
-        attributes.put("phone", List.of(userResponse.getPhone()));
-        attributes.put("userId",  List.of(userResponse.getId().toString()));
-        attributes.put("createdBy", List.of(userResponse.getCreatedBy()));
+        attributes.put("phone", List.of(userRequest.getPhone()));
+        attributes.put("userType",  List.of(userRequest.getUserType()));
         user.setAttributes(attributes);
 
         RealmResource realmResource = keycloak.realm(keycloakReal);
@@ -98,23 +127,15 @@ public class AccountServiceImpl implements AccountService {
             throw new RuntimeException("Error on response keycloak");
         }
         String userId = CreatedResponseUtil.getCreatedId(response);
-        userService.updateKeyCloakId(accountRequest.getUserId(), userId);
 
-        // Define password credential
         CredentialRepresentation passwordCred = new CredentialRepresentation();
         passwordCred.setTemporary(false);
         passwordCred.setType(CredentialRepresentation.PASSWORD);
-        passwordCred.setValue(accountRequest.getPassword());
+        passwordCred.setValue(userRequest.getPassword());
 
         UserResource userResource = usersResource.get(userId);
 
-        // Set password credential
         userResource.resetPassword(passwordCred);
-    }
-
-    @Override
-    @Transactional
-    public void updatePassword(AccountRequest accountRequest) throws NotFoundException {
-
+        return userId;
     }
 }

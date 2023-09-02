@@ -4,7 +4,6 @@ import com.aptech.group.dto.title.TitleCriteria;
 import com.aptech.group.dto.title.TitleRequest;
 import com.aptech.group.dto.title.TitleResponse;
 import com.aptech.group.dto.title.UpdateTitleRequest;
-import com.aptech.group.exception.CommonExceptionAnnotation;
 import com.aptech.group.model.TitleEntity;
 import com.aptech.group.service.TitleService;
 import com.aptech.group.validator.ExistRecord;
@@ -59,7 +58,6 @@ public class TitleController {
   }
 
   @DeleteMapping
-  @CommonExceptionAnnotation
   @PreAuthorize("hasAnyRole(@environment.getProperty('title.delete'), @environment.getProperty('title.full'))")
   public void deleteTitles(@RequestBody Map<Integer, Long> ids) throws HttpClientErrorException.BadRequest {
     titleService.deleteTitles(ids);

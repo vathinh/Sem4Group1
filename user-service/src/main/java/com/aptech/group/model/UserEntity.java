@@ -29,6 +29,7 @@ public class UserEntity {
     private String lastName;
     private String email;
     private String phone;
+    private String userType;
 
     public String getFullName() {
         return String.format("%s %s", firstName, lastName);

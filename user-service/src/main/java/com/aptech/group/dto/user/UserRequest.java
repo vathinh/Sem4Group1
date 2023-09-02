@@ -16,17 +16,18 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 public class UserRequest {
 
-//    @ExistRecord(message = "Manager is not existed", ignoreNull = true, entityName = UserEntity.class)
-//    private Integer managerId;
-//
-//    @ExistRecord(message = "Title is not existed", entityName = TitleEntity.class)
-//    private Integer title;
+    @ExistRecord(message = "Title is not existed", entityName = TitleEntity.class)
+    private Integer title;
 
     @NotBlank
     private String firstName;
 
     @NotBlank
+    private String password;
+
+    @NotBlank
     private String lastName;
+    private String userType;
 
     @NotBlank
     @Email
@@ -39,7 +40,5 @@ public class UserRequest {
 
     private String keycloakId;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private ZonedDateTime commencementDate;
     private Long version;
 }

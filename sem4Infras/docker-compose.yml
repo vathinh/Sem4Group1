@@ -22,7 +22,7 @@ services:
   ## Keycloak Config with Mysql database
   keycloak-mysql:
     container_name: keycloak-mysql
-    image: mysql:5.7
+    image: mysql:8.0
     volumes:
       - ./mysql_keycloak_data:/var/lib/mysql
     environment:
@@ -37,7 +37,7 @@ services:
     command: [ "start-dev", "--import-realm" ]
     environment:
       DB_VENDOR: MYSQL
-      DB_ADDR: mysql
+      DB_ADDR: keycloak-mysql
       DB_DATABASE: keycloak
       DB_USER: keycloak
       DB_PASSWORD: password
@@ -85,4 +85,44 @@ services:
       - discovery-server
       - keycloak
 
+  ## User-Service Docker Compose Config
+  user-service:
+    container_name: user-service
+    image: sem4/user-service:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-user:5431/user-service
+      - SPRING_LIQUIBASE_URL=jdbc:postgresql://postgres-user:5431/user-service
+      - SPRING_LIQUIBASE_CHANGE_LOG=classpath:db.changelog/db.changelog-master.xml
+      - KEYCLOAK_AUTH-SERVER-URL=http://keycloak:8080
+    depends_on:
+      - postgres-user
+      - discovery-server
+      - api-gateway
 
+
+  ## Prometheus
+  prometheus:
+    image: prom/prometheus:v2.37.1
+    container_name: prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - user-service
+
+  grafana:
+    image: grafana/grafana-oss:8.5.2
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    links:
+      - prometheus:prometheus
+    volumes:
+      - ./grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password

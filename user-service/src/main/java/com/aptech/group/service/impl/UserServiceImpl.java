@@ -4,17 +4,15 @@ import com.aptech.group.dto.user.UserCriteria;
 import com.aptech.group.dto.user.UserRequest;
 import com.aptech.group.dto.user.UserResponse;
 import com.aptech.group.dto.user.UserUpdateRequest;
-import com.aptech.group.exception.CantDeleteExceptionAnnotation;
-import com.aptech.group.exception.NotFoundExceptionAnnotation;
 import com.aptech.group.mapstruct.UserMapper;
 import com.aptech.group.model.UserEntity;
 import com.aptech.group.repository.UserRepository;
+import com.aptech.group.service.AccountService;
 import com.aptech.group.service.MessageService;
 import com.aptech.group.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.NotFound;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -45,11 +43,14 @@ public class UserServiceImpl implements UserService {
     private final EntityManager entityManager;
 
     private final MessageService messageService;
+
+    private final AccountService accountService;
     private static final String DEFAULT_SORT_FIELD = "id";
 
 
     @Override
     public void create(UserRequest request) {
+        request.setKeycloakId(accountService.createKeycloak(request));
         UserEntity userEntity = mapper.toEntity(request);
         userRepository.save(userEntity);
     }
@@ -60,7 +61,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @NotFoundExceptionAnnotation
+    @Transactional
     public UserResponse getById(Integer id) {
         return userRepository.findById(id).map(mapper::toResponse).orElse(null);
     }
@@ -90,10 +91,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @CantDeleteExceptionAnnotation
     public void deleteUsers(Map<Integer, Long> ids) {
         if (!CollectionUtils.isEmpty(ids)) {
-            List<UserEntity> deleteUsers = userRepository.findAllByIds(ids.keySet());
+            List<UserEntity> deleteUsers = userRepository.findAllById(ids.keySet());
             deleteUsers.forEach(userEntity -> {
                 userEntity.setVersion(ids.get(userEntity.getId()));
                 userEntity.setDeleteFlag(true);
@@ -104,7 +104,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @NotFoundExceptionAnnotation
     public List<UserEntity> findAllUsersByTitleIds(List<Integer> ids) {
         return userRepository.findAllByTitleIdIn(ids);
     }

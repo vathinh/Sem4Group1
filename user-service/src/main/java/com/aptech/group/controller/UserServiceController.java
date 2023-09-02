@@ -4,7 +4,6 @@ import com.aptech.group.dto.user.UserCriteria;
 import com.aptech.group.dto.user.UserRequest;
 import com.aptech.group.dto.user.UserResponse;
 import com.aptech.group.dto.user.UserUpdateRequest;
-import com.aptech.group.exception.CommonExceptionAnnotation;
 import com.aptech.group.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,33 +25,28 @@ public class UserServiceController {
 
     private final UserService userService;
     @GetMapping
-    @CommonExceptionAnnotation
     @PreAuthorize("hasAnyRole(@environment.getProperty('user.read'), @environment.getProperty('user.full'))")
     public List<UserResponse> getAll() {
         return userService.getAll();
     }
 
     @PostMapping
-    @CommonExceptionAnnotation
     @PreAuthorize("hasAnyRole(@environment.getProperty('user.create'), @environment.getProperty('user.full'))")
     public void create(@RequestBody UserRequest userRequest) {
         userService.create(userRequest);
     }
 
     @GetMapping("getByCriteria")
-    @CommonExceptionAnnotation
     public Page<UserResponse> getAllByCriteria(UserCriteria userCriteria) {
         return userService.getAllByCriteria(userCriteria);
     }
 
     @PutMapping
-    @CommonExceptionAnnotation
     public void update(Integer id, UserUpdateRequest userUpdateRequest) throws NotFoundException {
         userService.updateUser(id, userUpdateRequest);
     }
 
     @DeleteMapping
-    @CommonExceptionAnnotation
     public void deleteUsers(Map<Integer, Long> ids) {
         userService.deleteUsers(ids);
     }

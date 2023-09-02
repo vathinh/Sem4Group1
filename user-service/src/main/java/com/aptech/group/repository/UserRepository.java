@@ -15,9 +15,8 @@ import java.util.Set;
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     Page<UserEntity> findAll(Specification<UserEntity> specification, Pageable pageable);
 
-    List<UserEntity> findAllByTitleIdIn(List<Integer> ids);
+    List<UserEntity> findAllByTitleIdIn(List<Integer> id);
 
     Optional<UserEntity> findByIdAndDeleteFlag(Integer id, boolean b);
 
-    List<UserEntity> findAllByIds(Set<Integer> integers);
 }
