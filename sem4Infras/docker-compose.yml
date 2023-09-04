@@ -19,6 +19,22 @@ services:
     command: -p 5431
     restart: always
 
+    postgres-user:
+      container_name: mysql-product
+      image: mysql
+      environment:
+        POSTGRES_DB: product-service
+        POSTGRES_USER: root
+        POSTGRES_PASSWORD: admin
+        PGDATA:
+      volumes:
+      expose:
+        - "3306"
+      ports:
+        - "3306:3306"
+      command: -p 3306
+      restart: always
+
   ## Keycloak Config with Mysql database
   keycloak-mysql:
     container_name: keycloak-mysql
