@@ -2,6 +2,23 @@
 version: '3.7'
 services:
   ## MySQL Docker Compose Config
+  postgres-payment:
+    container_name: postgres-payment
+    image: postgres
+    environment:
+      POSTGRES_DB: payment-service
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      PGDATA: /data/postgres
+    volumes:
+      - ./postgres-user:/data/postgres
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    command: -p 5432
+    restart: always
+
   postgres-user:
     container_name: postgres-user
     image: postgres
