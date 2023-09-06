@@ -7,6 +7,8 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 
     <include file="db.changelog/DDL/add-users-titles-table.sql"/>
     <include file="db.changelog/DML/add-users-titles.sql"/>
+    <include file="db.changelog/DDL/add-user-type-users-table.sql"/>
+
 
 
 
