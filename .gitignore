@@ -34,6 +34,4 @@ build/
 
 ### My SQL Host Data ###
 /sem4Infras/mysql_keycloak_data/
-/sem4Infras/postgres-user/
-/sem4Infras/config/
-
+/sem4Infras/postgres-user
