@@ -1,0 +1,54 @@
+keycloak:
+  auth-server-url: http://localhost:8080
+  realm: sem4Infras
+  cors: 'true'
+  cors-max-age: '0'
+  bearer-only: 'true'
+  ssl-required: external
+  resource: login-app
+  principal-attribute: preferred_username
+  public-client: 'true'
+  use-resource-role-mappings: 'true'
+spring:
+  main:
+    allow-bean-definition-overriding: 'true'
+  liquibase:
+    change-log: classpath:db.changelog/db.changelog-master.xml
+    password: admin
+    user: admin
+    url: jdbc:postgresql://localhost:5431/user-service
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: admin
+    username: admin
+    url: jdbc:postgresql://localhost:5431/user-service
+  zipkin:
+    base-url: http://localhost:9411
+  config:
+    import: roles.properties
+  application:
+    name: user-service
+  sleuth:
+    sampler:
+      probability: '1.0'
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/sem4Infras/protocol/openid-connect/certs
+server:
+  port: '0'
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:password@localhost:8761/eureka
+admin:
+  keycloak:
+    client-secret: 'TrREn6V2EPhRxX6XtVFEKSojm6zXxLbL'
+    client-id: backend-client
