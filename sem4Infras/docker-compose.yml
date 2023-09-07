@@ -20,83 +20,84 @@ services:
     restart: always
 
   ## Keycloak Config with Mysql database
-  keycloak-mysql:
-    container_name: keycloak-mysql
-    image: mysql:8.0
-    volumes:
-      - ./mysql_keycloak_data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: keycloak
-      MYSQL_USER: keycloak
-      MYSQL_PASSWORD: password
+#  keycloak-mysql:
+#    container_name: keycloak-mysql
+#    image: mysql:8.0
+#    volumes:
+#      - ./mysql_keycloak_data:/var/lib/mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: keycloak
+#      MYSQL_USER: keycloak
+#      MYSQL_PASSWORD: password
 
-  keycloak:
-    container_name: keycloak
-    image: quay.io/keycloak/keycloak:20.0.3
-    command: [ "start-dev", "--import-realm" ]
-    environment:
-      DB_VENDOR: MYSQL
-      DB_ADDR: keycloak-mysql
-      DB_DATABASE: keycloak
-      DB_USER: keycloak
-      DB_PASSWORD: password
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./keycloak/realms/import:/opt/keycloak/data/import
-#      - ./keycloak/themes:/opt/keycloak/themes
-    depends_on:
-      - keycloak-mysql
+#  keycloak:
+#    container_name: keycloak
+#    image: quay.io/keycloak/keycloak:20.0.3
+#    command: [ "start-dev", "--import-realm" ]
+#    environment:
+#      DB_VENDOR: MYSQL
+#      DB_ADDR: keycloak-mysql
+#      DB_DATABASE: keycloak
+#      DB_USER: keycloak
+#      DB_PASSWORD: password
+#      KEYCLOAK_ADMIN: admin
+#      KEYCLOAK_ADMIN_PASSWORD: admin
+#    ports:
+#      - "8080:8080"
+#    volumes:
+#      - ./keycloak/realms/import:/opt/keycloak/data/import
+#      - ./keycloak/realms/export:/opt/keycloak/data/export
+##      - ./keycloak/themes:/opt/keycloak/themes
+#    depends_on:
+#      - keycloak-mysql
 
 
   ## Zipkin
-  zipkin:
-    image: openzipkin/zipkin
-    container_name: zipkin
-    ports:
-      - "9411:9411"
+#  zipkin:
+#    image: openzipkin/zipkin
+#    container_name: zipkin
+#    ports:
+#      - "9411:9411"
 
   ## Eureka Server
-  discovery-server:
-    image: sem4/discovery-server:latest
-    container_name: discovery-server
-    ports:
-      - "8761:8761"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    depends_on:
-      - zipkin
+#  discovery-server:
+#    image: sem4/discovery-server:latest
+#    container_name: discovery-server
+#    ports:
+#      - "8761:8761"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    depends_on:
+#      - zipkin
 
-  api-gateway:
-    image: sem4/api-gateway:latest
-    container_name: api-gateway
-    ports:
-      - "8181:8080"
-    expose:
-      - "8181"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
-    depends_on:
-      - zipkin
-      - discovery-server
-      - keycloak
+#  api-gateway:
+#    image: sem4/api-gateway:latest
+#    container_name: api-gateway
+#    ports:
+#      - "8181:8080"
+#    expose:
+#      - "8181"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
+#    depends_on:
+#      - zipkin
+#      - discovery-server
+#      - keycloak
 
   ## User-Service Docker Compose Config
-  user-service:
-    container_name: user-service
-    image: sem4/user-service:latest
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-user:5431/user-service
-      - SPRING_LIQUIBASE_URL=jdbc:postgresql://postgres-user:5431/user-service
-      - SPRING_LIQUIBASE_CHANGE_LOG=classpath:db.changelog/db.changelog-master.xml
-      - KEYCLOAK_AUTH-SERVER-URL=http://keycloak:8080
-    depends_on:
-      - postgres-user
-      - discovery-server
-      - api-gateway
+#  user-service:
+#    container_name: user-service
+#    image: sem4/user-service:latest
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-user:5431/user-service
+#      - SPRING_LIQUIBASE_URL=jdbc:postgresql://postgres-user:5431/user-service
+#      - SPRING_LIQUIBASE_CHANGE_LOG=classpath:db.changelog/db.changelog-master.xml
+#      - KEYCLOAK_AUTH-SERVER-URL=http://keycloak:8080
+#    depends_on:
+#      - postgres-user
+#      - discovery-server
+#      - api-gateway
 

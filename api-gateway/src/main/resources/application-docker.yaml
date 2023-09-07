@@ -1,0 +1,23 @@
+logging:
+  level:
+    org:
+      springframework:
+        cloud: ERROR
+    io:
+      netty: ERROR
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+server:
+  port: '8080'
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/sem4Infras
+app:
+  eureka-server: discovery-server
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:password@discovery-server:8761/eureka
