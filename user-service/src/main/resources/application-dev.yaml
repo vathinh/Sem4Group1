@@ -25,15 +25,10 @@ spring:
     password: admin
     username: admin
     url: jdbc:postgresql://localhost:5431/user-service
-  zipkin:
-    base-url: http://localhost:9411
   config:
     import: roles.properties
   application:
     name: user-service
-  sleuth:
-    sampler:
-      probability: '1.0'
   security:
     oauth2:
       resourceserver:
