@@ -14,13 +14,14 @@ import java.time.ZonedDateTime;
 public class UserResponse {
 
     private Integer id;
-//    private UserReferResponse manager;
-//    private TitleResponse title;
+    private UserReferResponse manager;
+    private TitleResponse title;
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
     private String keycloakId;
+    private String userType;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private ZonedDateTime commencementDate;

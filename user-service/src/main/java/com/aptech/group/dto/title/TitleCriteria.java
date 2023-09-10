@@ -1,5 +1,6 @@
 package com.aptech.group.dto.title;
 
+import com.aptech.group.dto.PagingRequest;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -12,8 +13,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TitleCriteria {
-  private String code;
+public class TitleCriteria implements PagingRequest {
+  private Integer code;
   private String name;
   private String search;
   private int size;

@@ -8,10 +8,12 @@ import com.aptech.group.model.UserEntity;
 import com.aptech.group.model.UserInfoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring", uses = EntityMapper.class)
 
 public interface UserMapper {
+
     UserResponse toResponse(UserEntity userEntity);
     UserResponse toResponse(UserReferResponse referResponse);
     UserReferResponse toReferResponse(UserEntity userEntity);
@@ -20,6 +22,6 @@ public interface UserMapper {
 
     UserEntity toEntity(UserRequest userRequest);
 
-    UserEntity toEntity(UserUpdateRequest userUpdateRequest);
+    void updateEntity(UserUpdateRequest userUpdateRequest, @MappingTarget UserEntity userEntity);
 
 }

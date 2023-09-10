@@ -22,11 +22,14 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TitleEntity title;
 
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
+    private String userType;
 
     public String getFullName() {
         return String.format("%s %s", firstName, lastName);
