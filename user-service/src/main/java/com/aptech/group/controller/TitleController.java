@@ -4,9 +4,7 @@ import com.aptech.group.dto.title.TitleCriteria;
 import com.aptech.group.dto.title.TitleRequest;
 import com.aptech.group.dto.title.TitleResponse;
 import com.aptech.group.dto.title.UpdateTitleRequest;
-import com.aptech.group.model.TitleEntity;
 import com.aptech.group.service.TitleService;
-import com.aptech.group.validator.ExistRecord;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -30,35 +28,33 @@ import static com.aptech.group.controller.UserServiceEndpoints.TITLE_PATH;
 public class TitleController {
   private final TitleService titleService;
 
-  @GetMapping
-  @PreAuthorize("hasAnyRole(@environment.getProperty('title.read'), @environment.getProperty('title.full'))")
+  @GetMapping("/allTitles")
   public Page<TitleResponse> getAllTitles(@Valid TitleCriteria titleCriteria) {
     return titleService.getAllTitles(titleCriteria);
   }
 
   @GetMapping("{id}")
-  @PreAuthorize("hasAnyRole(@environment.getProperty('title.read'), @environment.getProperty('title.full'))")
-  public TitleResponse getTitleById(@PathVariable("id") @ExistRecord(entityName = TitleEntity.class) Integer id) {
+  public TitleResponse getTitleById(@PathVariable("id") Integer id) {
     return titleService.getTitleById(id);
   }
 
   @PostMapping
   @ResponseStatus(code = HttpStatus.CREATED)
-  @PreAuthorize("hasAnyRole(@environment.getProperty('title.create'), @environment.getProperty('title.full'))")
+  @PreAuthorize("hasAnyRole(@environment.getProperty('employee.title.create'), @environment.getProperty('title.full'))")
   public void createTitle(@RequestBody @Valid TitleRequest titleRequest) {
     titleService.createTitle(titleRequest);
   }
 
   @PutMapping("{id}")
-  @PreAuthorize("hasAnyRole(@environment.getProperty('title.update'), @environment.getProperty('title.full'))")
+  @PreAuthorize("hasAnyRole(@environment.getProperty('employee.title.update'), @environment.getProperty('title.full'))")
   public void updateTitle(
-      @PathVariable("id") @ExistRecord(entityName = TitleEntity.class) Integer id,
+      @PathVariable("id") Integer id,
       @RequestBody @Valid UpdateTitleRequest updateTitleRequest) {
     titleService.updateTitle(id, updateTitleRequest);
   }
 
   @DeleteMapping
-  @PreAuthorize("hasAnyRole(@environment.getProperty('title.delete'), @environment.getProperty('title.full'))")
+  @PreAuthorize("hasAnyRole(@environment.getProperty('employee.title.delete'), @environment.getProperty('title.full'))")
   public void deleteTitles(@RequestBody Map<Integer, Long> ids) throws HttpClientErrorException.BadRequest {
     titleService.deleteTitles(ids);
   }
