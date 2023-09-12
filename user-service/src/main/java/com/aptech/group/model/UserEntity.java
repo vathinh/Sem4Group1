@@ -1,5 +1,6 @@
 package com.aptech.group.model;
 
+import com.aptech.group.enums.UserTypeEnum;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -29,6 +30,8 @@ public class UserEntity {
     private String lastName;
     private String email;
     private String phone;
+
+//    @Enumerated(EnumType.STRING)
     private String userType;
 
     public String getFullName() {

@@ -14,8 +14,6 @@ import java.util.Map;
 
 public interface UserService {
     void create(UserRequest request);
-    List<UserResponse> getAll();
-
     UserResponse getById(Integer id);
     Page<UserResponse> getAllByCriteria(UserCriteria userCriteria);
 
@@ -24,7 +22,9 @@ public interface UserService {
     void deleteUsers(Map<Integer, Long> ids);
 
     List<UserEntity> findAllUsersByTitleIds(List<Integer> ids);
-    void updateKeyCloakId(Integer id, String keycloakId);
 
+    UserResponse getByEmail(String email);
+
+    UserResponse getCustomerByEmail(String email);
 
 }
