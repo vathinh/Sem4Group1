@@ -24,24 +24,24 @@ public class UserServiceController {
 
     private final UserService userService;
 
-    @PostMapping("/registration")
+    @PostMapping("registration")
     public void create(@RequestBody UserRequest userRequest) {
         userService.create(userRequest);
     }
 
-    @GetMapping("/getByCriteria")
+    @GetMapping("getByCriteria")
     @PreAuthorize("hasAnyRole(@environment.getProperty('employee.user.read'), @environment.getProperty('employee.user.full'))")
     public Page<UserResponse> getAllByCriteria(UserCriteria userCriteria) {
         return userService.getAllByCriteria(userCriteria);
     }
 
-    @GetMapping("/customer/{email}")
+    @GetMapping("customer/{email}")
     @PreAuthorize("hasAnyRole(@environment.getProperty('customer.user.read'), @environment.getProperty('customer.user.full'))")
     public UserResponse getCustomerByEmail(@PathVariable("email") String email) {
         return userService.getCustomerByEmail(email);
     }
 
-    @GetMapping("/employee/{email}")
+    @GetMapping("employee/{email}")
     @PreAuthorize("hasAnyRole(@environment.getProperty('employee.user.read'), @environment.getProperty('employee.user.full'))")
     public UserResponse getUserByEmail(@PathVariable("email") String email) {
         return userService.getByEmail(email);

@@ -35,7 +35,7 @@ spring:
         jwt:
           jwk-set-uri: http://localhost:8080/realms/sem4Infras/protocol/openid-connect/certs
 server:
-  port: '0'
+  port: 8081
 logging:
   level:
     org:
