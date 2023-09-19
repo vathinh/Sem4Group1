@@ -1,10 +1,13 @@
 package com.aptech.group.repository;
 
+import com.aptech.group.enums.UserTypeEnum;
 import com.aptech.group.model.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,5 +21,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     List<UserEntity> findAllByTitleIdIn(List<Integer> id);
 
     Optional<UserEntity> findByIdAndDeleteFlag(Integer id, boolean b);
+
+    Optional<UserEntity> findByEmail(String email);
+
+    Optional<UserEntity> findByKeycloakId(String keycloakId);
 
 }

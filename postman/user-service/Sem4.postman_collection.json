@@ -10,20 +10,400 @@
 			"name": "User Service API",
 			"item": [
 				{
+					"name": "Employee API",
+					"item": [
+						{
+							"name": "getUsers",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_sem4}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john.doe@example.com\",\r\n    \"phone\": \"1234567890\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8181/api/user/getByCriteria?size=10&page=0&lastedValue=lastValue&lastedPage=1&userType=EMPLOYEE",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"user",
+										"getByCriteria"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "managerId",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "title",
+											"value": "3",
+											"disabled": true
+										},
+										{
+											"key": "firstName",
+											"value": "Test Auditor",
+											"disabled": true
+										},
+										{
+											"key": "lastName",
+											"value": "A",
+											"disabled": true
+										},
+										{
+											"key": "email",
+											"value": "john@example.com",
+											"disabled": true
+										},
+										{
+											"key": "phone",
+											"value": "123456789",
+											"disabled": true
+										},
+										{
+											"key": "keycloakId",
+											"value": "abcdef",
+											"disabled": true
+										},
+										{
+											"key": "search",
+											"value": "John",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "lastedValue",
+											"value": "lastValue"
+										},
+										{
+											"key": "lastedPage",
+											"value": "1"
+										},
+										{
+											"key": "firstValue",
+											"value": "firstValue",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "firstName:ASC",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "lastName:ASC",
+											"disabled": true
+										},
+										{
+											"key": "userType",
+											"value": "EMPLOYEE"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create Title",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_sem4}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Mr\",\r\n  \"code\": \"MR\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8181/api/user/title",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"user",
+										"title"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get user by email for admin",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_sem4}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john.doe@example.com\",\r\n    \"phone\": \"1234567890\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8181/api/user/employee/bob.johnson@example.com",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"user",
+										"employee",
+										"bob.johnson@example.com"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "managerId",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "title",
+											"value": "3",
+											"disabled": true
+										},
+										{
+											"key": "firstName",
+											"value": "Test Auditor",
+											"disabled": true
+										},
+										{
+											"key": "lastName",
+											"value": "A",
+											"disabled": true
+										},
+										{
+											"key": "email",
+											"value": "john@example.com",
+											"disabled": true
+										},
+										{
+											"key": "phone",
+											"value": "123456789",
+											"disabled": true
+										},
+										{
+											"key": "keycloakId",
+											"value": "abcdef",
+											"disabled": true
+										},
+										{
+											"key": "search",
+											"value": "John",
+											"disabled": true
+										},
+										{
+											"key": "firstValue",
+											"value": "firstValue",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "firstName:ASC",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "lastName:ASC",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Customer API",
+					"item": [
+						{
+							"name": "get user detail for customer",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_sem4}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john.doe@example.com\",\r\n    \"phone\": \"1234567890\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8181/api/user/customer/CusomterTest@example.com",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"user",
+										"customer",
+										"CusomterTest@example.com"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "managerId",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "title",
+											"value": "3",
+											"disabled": true
+										},
+										{
+											"key": "firstName",
+											"value": "Test Auditor",
+											"disabled": true
+										},
+										{
+											"key": "lastName",
+											"value": "A",
+											"disabled": true
+										},
+										{
+											"key": "email",
+											"value": "john@example.com",
+											"disabled": true
+										},
+										{
+											"key": "phone",
+											"value": "123456789",
+											"disabled": true
+										},
+										{
+											"key": "keycloakId",
+											"value": "abcdef",
+											"disabled": true
+										},
+										{
+											"key": "search",
+											"value": "John",
+											"disabled": true
+										},
+										{
+											"key": "firstValue",
+											"value": "firstValue",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "firstName:ASC",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "lastName:ASC",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "createUser",
 					"request": {
 						"method": "POST",
 						"header": [
 							{
-								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
 								"key": "Authorization",
 								"value": "Bearer {{token_sem4}}",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"anotherTest\",\r\n    \"lastName\": \"API\",\r\n    \"email\": \"antoher@example.com\",\r\n    \"phone\": \"1234567890\",\r\n    \"userType\": \"employee\",\r\n    \"password\": \"password\"\r\n}\r\n",
+							"raw": "{\r\n    \"firstName\": \"TestSecurity16\",\r\n    \"lastName\": \"TestSecurity16\",\r\n    \"email\": \"TestSecurity16@example.com\",\r\n    \"phone\": \"1234567890\",\r\n    \"userType\": \"CUSTOMER\",\r\n    \"password\": \"password\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -31,48 +411,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8181/api/user",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8181",
-							"path": [
-								"api",
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getUsers",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_sem4}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john.doe@example.com\",\r\n    \"phone\": \"1234567890\"\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8181/api/user/getByCriteria?size=10&page=0&lastedValue=lastValue&lastedPage=1&firstValue=firstValue",
+							"raw": "http://localhost:8181/api/user/registration",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -81,114 +420,7 @@
 							"path": [
 								"api",
 								"user",
-								"getByCriteria"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1",
-									"disabled": true
-								},
-								{
-									"key": "managerId",
-									"value": "2",
-									"disabled": true
-								},
-								{
-									"key": "title",
-									"value": "3",
-									"disabled": true
-								},
-								{
-									"key": "firstName",
-									"value": "Test Auditor",
-									"disabled": true
-								},
-								{
-									"key": "lastName",
-									"value": "A",
-									"disabled": true
-								},
-								{
-									"key": "email",
-									"value": "john@example.com",
-									"disabled": true
-								},
-								{
-									"key": "phone",
-									"value": "123456789",
-									"disabled": true
-								},
-								{
-									"key": "keycloakId",
-									"value": "abcdef",
-									"disabled": true
-								},
-								{
-									"key": "search",
-									"value": "John",
-									"disabled": true
-								},
-								{
-									"key": "size",
-									"value": "10"
-								},
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "lastedValue",
-									"value": "lastValue"
-								},
-								{
-									"key": "lastedPage",
-									"value": "1"
-								},
-								{
-									"key": "firstValue",
-									"value": "firstValue"
-								},
-								{
-									"key": "sort",
-									"value": "firstName:ASC",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "lastName:ASC",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create Title",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Mr\",\r\n  \"code\": \"MR\"\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8181/api/user/title",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8181",
-							"path": [
-								"api",
-								"user",
-								"title"
+								"registration"
 							]
 						}
 					},
@@ -242,7 +474,7 @@
 			]
 		},
 		{
-			"name": "get token sem4",
+			"name": "Get Admin Token",
 			"event": [
 				{
 					"listen": "test",
@@ -278,7 +510,7 @@
 						},
 						{
 							"key": "client_id",
-							"value": "login-app",
+							"value": "admin-client",
 							"type": "text"
 						},
 						{
@@ -319,7 +551,7 @@
 			"response": []
 		},
 		{
-			"name": "get token sem4 image",
+			"name": "Get User Token",
 			"event": [
 				{
 					"listen": "test",
@@ -345,17 +577,17 @@
 					"urlencoded": [
 						{
 							"key": "username",
-							"value": "admin",
+							"value": "user",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "admin",
+							"value": "user",
 							"type": "text"
 						},
 						{
 							"key": "client_id",
-							"value": "login-app",
+							"value": "admin-client",
 							"type": "text"
 						},
 						{
@@ -378,10 +610,10 @@
 					]
 				},
 				"url": {
-					"raw": "http://keycloak:8080/realms/sem4Infras/protocol/openid-connect/token",
+					"raw": "http://localhost:8080/realms/sem4Infras/protocol/openid-connect/token",
 					"protocol": "http",
 					"host": [
-						"keycloak"
+						"localhost"
 					],
 					"port": "8080",
 					"path": [
@@ -390,6 +622,65 @@
 						"protocol",
 						"openid-connect",
 						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Ttile",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token_sem4}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Mr\",\r\n  \"code\": \"MR\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8181/api/user/title/allTitles?size=10&page=0&lastedValue=lastValue&lastedPage=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"api",
+						"user",
+						"title",
+						"allTitles"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "lastedValue",
+							"value": "lastValue"
+						},
+						{
+							"key": "lastedPage",
+							"value": "1"
+						}
 					]
 				}
 			},

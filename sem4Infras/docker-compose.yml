@@ -19,54 +19,56 @@ services:
     command: -p 5431
     restart: always
 
-    postgres-user:
-      container_name: mysql-product
-      image: mysql
-      environment:
-        POSTGRES_DB: product-service
-        POSTGRES_USER: root
-        POSTGRES_PASSWORD: admin
-        PGDATA:
-      volumes:
-      expose:
-        - "3306"
-      ports:
-        - "3306:3306"
-      command: -p 3306
-      restart: always
+  mysql-product:
+    container_name: mysql-product
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: product-service
+      MYSQL_DB: product-service
+      MYSQL_USER: admin
+      MYSQK_PASSWORD: admin
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
 
   ## Keycloak Config with Mysql database
-#  keycloak-mysql:
-#    container_name: keycloak-mysql
-#    image: mysql:8.0
-#    volumes:
-#      - ./mysql_keycloak_data:/var/lib/mysql
-#    environment:
-#      MYSQL_ROOT_PASSWORD: root
-#      MYSQL_DATABASE: keycloak
-#      MYSQL_USER: keycloak
-#      MYSQL_PASSWORD: password
+  keycloak-mysql:
+    container_name: keycloak-mysql
+    image: mysql:8.0
+    volumes:
+      - ./mysql_keycloak_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+    expose:
+      - "3307"
+    ports:
+      - "3307:3307"
 
-#  keycloak:
-#    container_name: keycloak
-#    image: quay.io/keycloak/keycloak:20.0.3
-#    command: [ "start-dev", "--import-realm" ]
-#    environment:
-#      DB_VENDOR: MYSQL
-#      DB_ADDR: keycloak-mysql
-#      DB_DATABASE: keycloak
-#      DB_USER: keycloak
-#      DB_PASSWORD: password
-#      KEYCLOAK_ADMIN: admin
-#      KEYCLOAK_ADMIN_PASSWORD: admin
-#    ports:
-#      - "8080:8080"
-#    volumes:
-#      - ./keycloak/realms/import:/opt/keycloak/data/import
-#      - ./keycloak/realms/export:/opt/keycloak/data/export
-##      - ./keycloak/themes:/opt/keycloak/themes
-#    depends_on:
-#      - keycloak-mysql
+  keycloak:
+    container_name: keycloak
+    image: quay.io/keycloak/keycloak:20.0.3
+    command: [ "start-dev", "--import-realm" ]
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: keycloak-mysql
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./keycloak/realms/import:/opt/keycloak/data/import
+      - ./keycloak/realms/export:/opt/keycloak/data/export
+#     - ./keycloak/themes:/opt/keycloak/themes
+    depends_on:
+      - keycloak-mysql
 
 
   ## Zipkin

@@ -21,6 +21,7 @@ public class UserCriteria implements PagingRequest {
     private String lastName;
     private String email;
     private String phone;
+    private String userType;
     private String keycloakId;
 
     private String search;

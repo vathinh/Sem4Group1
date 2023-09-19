@@ -3,6 +3,7 @@ package com.aptech.group.service.impl;
 import com.aptech.group.dto.account.AccountRequest;
 import com.aptech.group.dto.account.AccountResponse;
 import com.aptech.group.dto.user.UserRequest;
+import com.aptech.group.enums.UserTypeEnum;
 import com.aptech.group.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,7 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +57,12 @@ public class AccountServiceImpl implements AccountService {
 
 //    private final UserService userService;
 
+    @Value("${admin.keycloak.group-customerId}")
+    private String groupCustomerId;
+
+    @Value("${admin.keycloak.group-employeeId}")
+    private String groupEmployeeId;
+
 
     private Keycloak getKeycloakClient() {
         return KeycloakBuilder.builder()
@@ -69,11 +77,20 @@ public class AccountServiceImpl implements AccountService {
                 ).build();
     }
 
-
     @Override
     @Transactional
     public void updatePassword(AccountRequest accountRequest) throws NotFoundException {
+        Keycloak keycloakClient = getKeycloakClient();
+        RealmResource realmResource = keycloakClient.realm(keycloakReal);
+        UsersResource usersResource = realmResource.users();
+        UserResource userResource = usersResource.get(accountRequest.getKeycloakId());
 
+        CredentialRepresentation passwordCred = new CredentialRepresentation();
+        passwordCred.setTemporary(false);
+        passwordCred.setType(CredentialRepresentation.PASSWORD);
+        passwordCred.setValue(accountRequest.getPassword());
+
+        userResource.resetPassword(passwordCred);
     }
 
     @Override
@@ -136,6 +153,13 @@ public class AccountServiceImpl implements AccountService {
         UserResource userResource = usersResource.get(userId);
 
         userResource.resetPassword(passwordCred);
+
+        if(Objects.equals(userRequest.getUserType(), UserTypeEnum.CUSTOMER.value)) {
+            userResource.joinGroup(groupCustomerId);
+        } else {
+            userResource.joinGroup(groupEmployeeId);
+        }
+
         return userId;
     }
 }

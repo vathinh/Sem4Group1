@@ -8,7 +8,6 @@ import com.aptech.group.mapstruct.TitleMapper;
 import com.aptech.group.model.TitleEntity;
 import com.aptech.group.model.UserEntity;
 import com.aptech.group.repository.TitleRepository;
-import com.aptech.group.service.MessageService;
 import com.aptech.group.service.TitleService;
 import com.aptech.group.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +39,6 @@ public class TitleServiceImpl implements TitleService {
     private final EntityManager entityManager;
 
     private final UserService userService;
-
-    private final MessageService messageService;
     private static final String DEFAULT_SORT_FIELD = "id";
 
     @Override

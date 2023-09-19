@@ -18,8 +18,10 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeExchange(exchange ->
-                        exchange.pathMatchers("/eureka/**")
-                                .permitAll()
+                        exchange
+                                .pathMatchers("/eureka/**").permitAll()
+                                .pathMatchers("/api/user/registration").permitAll()
+                                .pathMatchers("/api/user/title/allTitles").permitAll()
                                 .anyExchange()
                                 .authenticated())
                 .oauth2ResourceServer(ServerHttpSecurity.OAuth2ResourceServerSpec::jwt);
