@@ -27,15 +27,15 @@ public class CategoryServiceController {
 
     @PostMapping
     public ResponseEntity<CategoryEntity> createCategory(@RequestBody CategoryRequest categoryRequest) {
-        log.info("new product created {}", categoryRequest);
+        log.info("new category created {}", categoryRequest);
         return categoryService.createCategory(categoryRequest);
     }
 
-    @PutMapping(path = "{categorySlug}")
+    @PutMapping(path = "{categoryId}")
     public ResponseEntity<CategoryEntity> updateCategory(
-            @PathVariable("categorySlug") String slug,
+            @PathVariable("categoryId") String id,
             @RequestBody CategoryRequest categoryRequest) {
-        return categoryService.updateCategory(categoryRequest, slug);
+        return categoryService.updateCategory(id, categoryRequest);
     }
 
     @DeleteMapping(path="{categoryId}")

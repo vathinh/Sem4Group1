@@ -1,6 +1,5 @@
 package com.aptech.group.model;
 
-import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
@@ -18,45 +17,22 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "product")
+@Table(name = "order")
 @Setter
 @Getter
-public class ProductEntity {
+public class OrderEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
-    @NotNull
-    private String name;
+    @Column(name="products")
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<OrderProductEntity> products;
 
-    @NotNull
-    private String slug;
+    private String status;
 
-    @NotNull
-    private BigDecimal price;
-
-    private String condition;
-
-    @NotNull
-    private String description;
-
-    @NotNull
-    private Integer quantity;
-
-    private String thumbnail;
-
-    @ElementCollection(targetClass=String.class)
-    private List<String> images;
-
-    @OneToOne
-    @JoinColumn(name = "brand")
-    private BrandEntity brand;
-
-    @OneToOne
-    @JoinColumn(name = "category")
-    private CategoryEntity category;
-
+    private BigDecimal total;
     @CreatedBy
     private String createdBy;
 
@@ -64,8 +40,8 @@ public class ProductEntity {
     private Date createdDate;
 
     @LastModifiedDate
-    private Date lastModifiedDate;
+    private String lastModifiedDate;
 
     @LastModifiedBy
-    private String lastModifiedBy;
+    private Date lastModifiedBy;
 }

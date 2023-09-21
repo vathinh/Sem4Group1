@@ -18,8 +18,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.text.Normalizer;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -29,12 +32,28 @@ public class BrandServiceImpl implements BrandService {
     @Autowired
     private final BrandRepository brandRepository;
 
+    private static final Pattern NONLATIN = Pattern.compile("[^\\w-]");
+    private static final Pattern WHITESPACE = Pattern.compile("[\\s]");
+
+    public static String toSlug(String input) {
+        String nowhitespace = WHITESPACE.matcher(input).replaceAll("-");
+        String normalized = Normalizer.normalize(nowhitespace, Normalizer.Form.NFD);
+        String slug = NONLATIN.matcher(normalized).replaceAll("");
+        return slug.toLowerCase(Locale.ENGLISH);
+    }
     private final BrandMapper mapper;
 
     @Override
     public ResponseEntity<BrandEntity> createBrand(BrandRequest brandRequest) {
-        BrandEntity brandEntity = mapper.toEntity(brandRequest);
-        return new ResponseEntity<>(brandRepository.save(brandEntity), HttpStatus.OK);
+        BrandEntity brandData = BrandEntity.builder()
+                .name(brandRequest.getName())
+                .slug(toSlug(brandRequest.getName()))
+                .thumbnail(brandRequest.getThumbnail())
+                .build();
+
+        return new ResponseEntity<BrandEntity>(
+                brandRepository.save(brandData),
+                HttpStatus.OK) ;
     }
 
     @Override
@@ -43,13 +62,26 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public ResponseEntity<BrandEntity> updateBrand(BrandRequest brandRequest, String brandSlug) {
-        Optional<BrandEntity> brandData = brandRepository.findBySlug(brandSlug);
+    public ResponseEntity<BrandEntity> updateBrand(String brandId, BrandRequest request) {
+        Optional<BrandEntity> brandData = brandRepository.findById(brandId);
+        if (brandData.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if(request.getName() != null)
+            brandData.get().setName(request.getName());
+        brandData.get().setSlug(toSlug(request.getName()));
+        if(request.getThumbnail() != null)
+            brandData.get().setThumbnail(request.getThumbnail());
         return new ResponseEntity<>(brandRepository.save(brandData.get()), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity deleteBrand(String brandId) {
+        Optional<BrandEntity> brandData = brandRepository.findById(brandId);
+        if (brandData.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         brandRepository.deleteById(brandId);
         return new ResponseEntity(HttpStatus.OK);
     }

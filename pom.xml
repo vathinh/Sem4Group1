@@ -20,6 +20,7 @@
         <module>discovery-server</module>
         <module>user-service</module>
         <module>product-service</module>
+        <module>order-service</module>
     </modules>
 
     <properties>

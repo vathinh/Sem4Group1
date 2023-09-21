@@ -10,6 +10,6 @@ import java.util.List;
 public interface CategoryService {
     ResponseEntity<CategoryEntity> createCategory(CategoryRequest categoryRequest);
     ResponseEntity<List<CategoryResponse>> getAll();
-    ResponseEntity<CategoryEntity> updateCategory(CategoryRequest categoryRequest, String categorySlug);
+    ResponseEntity<CategoryEntity> updateCategory(String categoryId, CategoryRequest categoryRequest);
     ResponseEntity deleteCategory(String categoryId);
 }

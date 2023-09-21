@@ -8,8 +8,14 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ProductService {
-    ResponseEntity<ProductEntity> createProduct(ProductRequest request);
-    ResponseEntity<List<ProductResponse>> getAll();
+    ResponseEntity<ProductEntity> createProduct(ProductRequest request, String userId);
+    ResponseEntity<List<ProductResponse>> getAll(
+            List<String> idList,
+            String slug,
+            String categorySlug,
+            Integer page,
+            Integer limit
+    );
     ResponseEntity deleteProduct(String productId);
-    ResponseEntity<ProductEntity> updateProduct(ProductRequest request, String productSlug);
+    ResponseEntity<ProductEntity> updateProduct(String productSlug, ProductRequest request, String userId);
 }
