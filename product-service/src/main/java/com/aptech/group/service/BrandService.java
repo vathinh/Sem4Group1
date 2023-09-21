@@ -10,6 +10,6 @@ import java.util.List;
 public interface BrandService {
     ResponseEntity<BrandEntity> createBrand(BrandRequest brandRequest);
     ResponseEntity<List<BrandResponse>> getAll();
-    ResponseEntity<BrandEntity> updateBrand(BrandRequest brandRequest, String brandSlug);
+    ResponseEntity<BrandEntity> updateBrand(String brandId, BrandRequest request);
     ResponseEntity deleteBrand(String brandId);
 }

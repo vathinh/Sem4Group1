@@ -24,4 +24,6 @@ public class CategoryEntity {
     private String slug;
 
     private String thumbnail;
+
+    private String parent;
 }

@@ -27,15 +27,15 @@ public class BrandServiceController {
 
     @PostMapping
     public ResponseEntity<BrandEntity> createBrand(@RequestBody BrandRequest brandRequest) {
-        log.info("new product created {}", brandRequest);
+        log.info("new brand created {}", brandRequest);
         return brandService.createBrand(brandRequest);
     }
 
-    @PutMapping(path = "{brandSlug}")
+    @PutMapping(path = "{brandId}")
     public ResponseEntity<BrandEntity> updateBrand(
-            @PathVariable("brandSlug") String slug,
-            @RequestBody BrandRequest brandRequest) {
-        return brandService.updateBrand(brandRequest, slug);
+            @PathVariable("brandId") String id,
+            @RequestBody BrandRequest request) {
+        return brandService.updateBrand(id, request);
     }
 
     @DeleteMapping(path="{brandId}")

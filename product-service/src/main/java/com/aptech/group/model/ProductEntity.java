@@ -64,8 +64,8 @@ public class ProductEntity {
     private Date createdDate;
 
     @LastModifiedDate
-    private String lastModifiedDate;
+    private Date lastModifiedDate;
 
     @LastModifiedBy
-    private Date lastModifiedBy;
+    private String lastModifiedBy;
 }

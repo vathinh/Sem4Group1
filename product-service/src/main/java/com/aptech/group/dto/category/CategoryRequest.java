@@ -13,4 +13,5 @@ public class CategoryRequest {
     @NotBlank
     private String name;
     private String thumbnail;
+    private String parent;
 }
