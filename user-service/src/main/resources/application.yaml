@@ -45,6 +45,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://eureka:password@localhost:8761/eureka
+    enabled: true
 admin:
   keycloak:
     client-secret: 'M18XOUsxN52C14ZGZs2OpHygjnCZJIFe'
