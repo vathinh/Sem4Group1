@@ -23,11 +23,11 @@ services:
     container_name: mysql-product
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: product-service
       MYSQL_DB: product-service
       MYSQL_USER: admin
-      MYSQK_PASSWORD: admin
+      MYSQL_PASSWORD: admin
     expose:
       - "3306"
     ports:
