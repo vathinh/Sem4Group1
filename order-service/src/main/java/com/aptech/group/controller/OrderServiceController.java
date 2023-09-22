@@ -43,7 +43,7 @@ public class OrderServiceController {
             @RequestBody OrderRequest orderRequest,
             @RequestAttribute String userId
     ) {
-        return orderService.updateOrder(userId, id, orderRequest);
+        return orderService.updateOrder(id, orderRequest, userId);
     }
 
     //delete order

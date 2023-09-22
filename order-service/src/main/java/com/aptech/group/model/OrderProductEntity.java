@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Data
 @Builder
@@ -26,5 +27,6 @@ public class OrderProductEntity {
     private String name;
     private String slug;
     private String thumbnail;
+    private BigDecimal price;
     private Integer quantity;
 }
